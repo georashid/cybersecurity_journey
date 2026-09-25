@@ -1,7 +1,27 @@
-## [Room/Lab/Topic Name] — [Date]
+# Weekly Progress — OverTheWire Bandit
 
-**Category:** e.g. Linux Fundamentals / Networking / SOC / Web App Security
-**Tools used:** e.g. TryHackMe, Wireshark, CyberChef
-**What I did:** 2–3 sentences describing the task and your approach
-**Key takeaway:** 1–2 sentences on what you learned or what surprised you
-**Evidence:** a screenshot of your terminal/dashboard (optional but strong)
+## Week 1–2: Levels 0–12
+
+**Category:** Linux Fundamentals
+**Tools used:** SSH, Kali Linux terminal
+
+Worked through Bandit Levels 0 through 12, going from basic file reading to unwrapping multi-layer compressed archives. Full command explanations are in `tools-and-notes` — here's what each level actually threw at me:
+
+- **Level 0 → 1:** First SSH connection, basic `cat` to read a file.
+- **Level 1 → 2:** Filename was just `-` — learned to use `./` so the shell doesn't mistake it for an option.
+- **Level 2 → 3:** Filename had spaces and leading dashes — combined quotes with `--`.
+- **Level 3 → 4:** Password hidden in a dotfile inside a subdirectory — `ls -la` revealed it.
+- **Level 4 → 5:** One real file hidden among decoys — `file ./*` picked out the actual text file.
+- **Level 5 → 6:** Searched a directory tree by exact size and permission using `find .`.
+- **Level 6 → 7:** Searched the *entire filesystem* (`find /`) by owner, group, and size.
+- **Level 7 → 8:** Used `grep` to isolate the one line containing a specific word.
+- **Level 8 → 9:** Used `sort` + `uniq -u` to find the single non-duplicated line in a huge file.
+- **Level 9 → 10:** Used `strings` to pull readable text out of a mostly-binary file, then `grep '^==='` to zero in on the right line.
+- **Level 10 → 11:** Decoded a base64-encoded password with `base64 -d`.
+- **Level 11 → 12:** Reversed a ROT13 cipher using `tr` with the shifted alphabet mapping.
+- **Level 12 → 13:** The hardest one so far — a hexdump that had been compressed multiple times over (mixing gzip, bzip2, and tar). Had to repeatedly check the real file type with `file`, rename to match, decompress/extract, and loop until plain text finally appeared.
+
+**Key takeaway from this stretch:** every level added exactly one new tool to the belt, and Level 12 forced me to actually combine several of them in a loop rather than using each in isolation. The biggest lesson: never trust a filename or extension — always verify the real file type before acting on it.
+
+---
+*Passwords intentionally omitted — OverTheWire's community treats posting solved credentials publicly as poor etiquette, since it lets others skip the actual puzzle.*
